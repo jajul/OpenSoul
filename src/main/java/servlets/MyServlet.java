@@ -1,5 +1,7 @@
 package servlets;
 
+import db.MyDataSourceFactory;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +32,11 @@ public class MyServlet extends HttpServlet {
         String varTextB = "It JSP.";
         request.setAttribute("textB", varTextB);
 
+        MyDataSourceFactory dataSourceFactory = new MyDataSourceFactory();
+        dataSourceFactory.getMySQLDataSource();
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
+
     }
 }
