@@ -35,6 +35,9 @@ function get_question() {
         dataType: 'json',
         success: function (data) {
             setQuestion(data.num, data.text);
+        },
+        error: function (xhr, error) {
+            console.error(xhr);
         }
     });
 }
@@ -75,10 +78,13 @@ function send_result() {
             email: useremail,
             URL: videoURL
         },
-        dataType: 'json',
+        dataType: 'text',
         success: function (data) {
             state.flow = 'sent';
             render();
+        },
+        error: function (xhr, error) {
+            console.error(xhr);
         }
     });
 }
