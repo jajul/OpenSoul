@@ -1,8 +1,9 @@
 var params = getHashParams(),
-    mode = typeof(params.mode) == 'undefined' ? 'webrtc' : params.mode,
+    mode = typeof(params.mode)=='undefined'?'webrtc':params.mode,
     username,
+    login_name,
     password,
-    application_name = typeof(params.appname) == 'undefined' ? 'videochat' : params.appname,
+    application_name = typeof(params.appname)=='undefined'?'videochat':params.appname,
     account_name = params.accname,
     dialog,
     showLog = true,
@@ -10,23 +11,21 @@ var params = getHashParams(),
     outboundCall = null;
 
 function getHashParams() {
-    var hashParams = {};
-    var e,
-        a = /\+/g,  // Regex for replacing addition symbol with a space
-        r = /([^&;=]+)=?([^&;]*)/g,
-        d = function (s) {
-            return decodeURIComponent(s.replace(a, " "));
-        },
-        q = window.location.hash.substring(1);
+  var hashParams = {};
+  var e,
+      a = /\+/g,  // Regex for replacing addition symbol with a space
+      r = /([^&;=]+)=?([^&;]*)/g,
+      d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+      q = window.location.hash.substring(1);
 
-    while (e = r.exec(q))
-        hashParams[d(e[1])] = d(e[2]);
+  while (e = r.exec(q))
+     hashParams[d(e[1])] = d(e[2]);
 
-    return hashParams;
+  return hashParams;
 }
 
 function log(str) {
-    document.getElementById("log").innerHTML += str + "<br/>";
+  document.getElementById("log").innerHTML += str+"<br/>";
 }
 
 // create VoxImplant instance
@@ -43,29 +42,29 @@ voxAPI.addEventListener(VoxImplant.Events.SourcesInfoUpdated, onSourcesInfoUpdat
 
 // initialize SDK
 try {
-    voxAPI.init({
-        useRTCOnly: true, // используем WebRTC принудительно
-        //useFlashOnly: mode=='flash'?true:false, // force Flash mode
-        micRequired: true, // force microphone/camera access request
-        videoSupport: true, // enable video support
-        progressTone: true, // play progress tone
-        swfContainer: 'voximplant_container' // Flash movie will be loaded in the specified container
-    });
-} catch (e) {
-    if (e.message == "OLD_FLASH_VERSION") alert("Please update your Flash Player to version 11.3 or higher");
+  voxAPI.init({
+    useRTCOnly: true, // используем WebRTC принудительно
+    //useFlashOnly: mode=='flash'?true:false, // force Flash mode
+    micRequired: true, // force microphone/camera access request
+    videoSupport: true, // enable video support
+    progressTone: true, // play progress tone
+    swfContainer: 'voximplant_container' // Flash movie will be loaded in the specified container
+  });
+} catch(e) {
+  if (e.message == "OLD_FLASH_VERSION") alert("Please update your Flash Player to version 11.3 or higher");
 }
 
 // SDK ready - functions can be called now
-function onSdkReady() {
-    log("onSDKReady version " + VoxImplant.version);
-    log("WebRTC supported: " + voxAPI.isRTCsupported());
-    //connect();
-    voxAPI.connect();
+function onSdkReady(){
+  log("onSDKReady version "+VoxImplant.version);
+  log("WebRTC supported: "+voxAPI.isRTCsupported());
+  //connect();
+  voxAPI.connect();
 }
 
 // Connection with VoxImplant established
 function onConnectionEstablished() {
-    log("Connection established: " + voxAPI.connected());
+  log("Connection established: "+voxAPI.connected());
 
   // show authorization form
   var $authForm = $('<div id="authForm">'+
@@ -77,67 +76,56 @@ function onConnectionEstablished() {
       '</div>'+
     '</div>'+
       '<div class="form-group">'+
-      '<label for="inputLogin" class="col-sm-2 control-label">Login</label>'+
+      '<label for="inputLogin_name" class="col-sm-2 control-label">Login</label>'+
       '<div class="col-sm-10">'+
-      '<input type="text" class="form-control" id="inputLogin" placeholder="Login">'+
+      '<input type="text" class="form-control" id="inputLogin_name" placeholder="Login">'+
       '</div>'+
       '</div>'+
-    '<div class="form-group">'+
-      '<label for="inputPassword" class="col-sm-2 control-label">Password</label>'+
-      '<div class="col-sm-10">'+
-        '<input type="password" class="form-control" id="inputPassword" placeholder="Password">'+
-      '</div>'+
-    '</div>'+
     '<input type="submit" value="submit" class="hidden" />'+
   '</form>'+
   '</div>');
 
-    if (typeof username == 'undefined' || typeof password == 'undefined') {
-        dialog = new BootstrapDialog({
-            title: 'Authorization',
-            message: $authForm,
-            buttons: [{
-                label: 'Sign in',
-                action: function (dialog) {
-                    $('#authForm form').submit();
-                }
-            }],
-            closable: false,
-            onshown: function (dialog) {
-                $('#inputUsername').focus();
-                $('#authForm form').on('submit', function (e) {
-                    username = $('#inputUsername').val();
-                    account_name = $('#inputLogin').val();
-                    password = $('#inputPassword').val();
-                    login();
-                    e.preventDefault();
-                });
+  if (typeof username == 'undefined' || typeof password == 'undefined') {
+    dialog = new BootstrapDialog({
+      title: 'Authorization',
+      message: $authForm,
+      buttons: [{
+            label: 'Sign in',
+            action: function(dialog) {
+              $('#authForm form').submit();
             }
+        }],
+      closable: false,
+      onshown: function(dialog) {
+        $('#inputUsername').focus();
+        $('#authForm form').on('submit', function(e) {
+          username = $('#inputUsername').val();
+          login_name = $('#inputLogin_name').val();
+          login();
+          e.preventDefault();
         });
-        dialog.open();
-    } else login();
+      }
+    });
+    dialog.open();
+  } else login();
 }
 
 // Login function
 function login() {
-    log(username + "@" + application_name + "." + account_name + ".voximplant.com");
-    voxAPI.login(username + "@" + "videochat" + "." + account_name + ".voximplant.com", password);
+    log(username + " is going to connect as " + login_name + " to " + application_name);
+    voxAPI.login(login_name+"@"+"videochat"+"."+"samaramaks"+".voximplant.com", "voximplant9085com");
 }
 
 // Connection with VoxImplant failed
 function onConnectionFailed() {
-    log("Connection failed");
-    setTimeout(function () {
-        voxAPI.connect();
-    }, 1000);
+  log("Connection failed");
+  setTimeout(function() {voxAPI.connect();}, 1000);
 }
 
 // Connection with VoxImplant closed
 function onConnectionClosed() {
-    log("Connection closed");
-    setTimeout(function () {
-        voxAPI.connect();
-    }, 1000);
+  log("Connection closed");
+  setTimeout(function() {voxAPI.connect();}, 1000);
 }
 
 // Handle authorization result
@@ -170,7 +158,7 @@ function onAuthResult(e) {
         }
     } else {
         // Wrong username or password
-        if (!$('div.alert.alert-danger').length) $('#authForm').prepend('<div class="alert alert-danger" role="alert">Wrong username or password was specified</div>');
+        if (!$('div.alert.alert-danger').length) $('#authForm').prepend('<div class="alert alert-danger" role="alert">Wrong login was specified</div>');
         log("Code: " + e.code);
     }
 }
