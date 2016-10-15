@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class MyDataSourceFactoryTest {
     private static final Logger logger = LogManager.getLogger(MyDataSourceFactoryTest.class);
 
-    @Test
+    //@Test
     public void testGetConnection() throws Exception {
         Connection conn = MyDataSourceFactory.getConnection();
         assert(conn != null);
