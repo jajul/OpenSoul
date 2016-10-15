@@ -17,11 +17,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
         <dependency>
-            <groupId>javaee</groupId>
+            <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>5</version>
+            <version>7.0</version>
         </dependency>
+
 
         <dependency>
             <groupId>javax</groupId>
@@ -29,6 +31,21 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.5.0-b01</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+            <version>1.5.6</version>
+        </dependency>
+
 
         <dependency>
             <groupId>mysql</groupId>
