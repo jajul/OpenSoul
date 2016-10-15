@@ -26,16 +26,23 @@ function printQuestion() {
     if (question.num > 0) {
         $('#question_num').show().html('Question ' + question.num);
         $('#question_text').show().html(question.text);
-        $('#btn_next_question').html('Next');
+        $('#startButton').hide();
+        $('#nextButton').show();
+        $('#sendButton').hide();
     }
     else if (question.num == 0) {
         $('#question_num').hide();
         $('#question_text').hide();
+        $('#startButton').show();
+        $('#nextButton').hide();
+        $('#sendButton').hide();
     }
     else if (question.num == -1) {
         $('#question_num').hide();
         $('#question_text').html('Thank you!');
-        $('#btn_next_question').hide();
+        $('#startButton').hide();
+        $('#nextButton').hide();
+        $('#sendButton').show();
     }
 }
 
