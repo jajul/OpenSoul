@@ -9,14 +9,14 @@ import static org.junit.Assert.*;
  */
 public class QuestionStoreTest {
 
-    @Test
+    //@Test
     public void testGetRandomQuestion() throws Exception {
         Question question = QuestionStore.getRandomQuestion();
         assert (question != null);
         assert (question.getText() != null);
     }
 
-    @Test
+    //@Test
     public void testGetQuestion() throws Exception {
 
     }
