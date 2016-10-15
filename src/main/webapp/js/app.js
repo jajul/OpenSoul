@@ -114,7 +114,7 @@ function onConnectionEstablished() {
 // Login function
 function login() {
     log(username + " is going to connect as " + login_name + " to " + application_name);
-    voxAPI.login(login_name + "@" + "videochat" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
+    voxAPI.login(login_name + "@" + "videorecord" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
 }
 
 // Connection with VoxImplant failed
@@ -168,19 +168,19 @@ function onAuthResult(e) {
     }
 }
 
-// Call connected
+// Call connected - переопределения функций кнопок;  установка изображения с камеры в окно браузера
 function onCallConnected(e) {
-    log("CallConnected: " + currentCall.id());
+    log("CallConnected: "+currentCall.id());
     if ($('#cancelButton').length) {
         $('#cancelButton').html('Disconnect');
     } else {
         $('#callButton').replaceWith('<button type="button" class="btn btn-danger" id="cancelButton">Disconnect</button>');
-        $('#cancelButton').click(function () {
+        $('#cancelButton').click(function() {
             currentCall.hangup();
         });
     }
     if (mode == 'flash') {
-        setTimeout(function () {
+        setTimeout(function() {
             sendVideo(true);
             showRemoteVideo(true);
             // For Flash WebSDK function call is required
@@ -188,10 +188,10 @@ function onCallConnected(e) {
             currentCall.setRemoteVideoPosition(330, 0);
         }, 1000);
     } else {
-        voxAPI.sendVideo(true);
-        currentCall.showRemoteVideo(true);
-        //sendVideo(true);
-        //showRemoteVideo(true);
+        //обращение к API
+        sendVideo(true);
+        showRemoteVideo(true);
+
         // For WebRTC just using JS/CSS for transformation
         $video = $(document.getElementById(currentCall.getVideoElementId()));
         $video.appendTo('#voximplant_container');
