@@ -41,7 +41,7 @@ public class MyServlet extends HttpServlet {
 //        MyDataSourceFactory dataSourceFactory = new MyDataSourceFactory();
 //        dataSourceFactory.getMySQLDataSource();
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index_old.jsp");
         dispatcher.forward(request, response);
 
     }

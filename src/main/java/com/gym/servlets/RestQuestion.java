@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * Created by Gochan on 15.10.2016.
@@ -24,13 +25,17 @@ public class RestQuestion extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        logger.info("Get random question");
-        response.setContentType("text/plain");
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+
+        PrintWriter out = response.getWriter();
+        logger.info("Get question");
 
         try {
-            Question question = QuestionStore.getRandomQuestion();
+            Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
+            Question question = QuestionStore.getQuestion(num+1);
             if(question != null){
-                response.getOutputStream().print(question.getText());
+                out.write(question.toJson().toString());
             }
             else{
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
