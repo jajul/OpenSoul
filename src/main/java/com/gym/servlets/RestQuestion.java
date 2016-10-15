@@ -4,6 +4,7 @@ import com.gym.logic.question.Question;
 import com.gym.logic.question.QuestionStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,16 +30,20 @@ public class RestQuestion extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        logger.info("Get question");
 
         try {
             Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
+            logger.info("Get question after num " + num);
             Question question = QuestionStore.getQuestion(num+1);
             if(question != null){
-                out.write(question.toJson().toString());
+                String resp = question.toJson().toString();
+                logger.debug("response: " + resp);
+                out.write(resp);
             }
             else{
-                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                JSONObject resp = new JSONObject();
+                resp.put("stop", 1);
+                out.write(resp.toString());
             }
         }
         catch(Exception ex){

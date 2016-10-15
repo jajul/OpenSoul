@@ -29,7 +29,7 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        logger.info("do get");
+        logger.debug("do get");
         logger.error("test error message");
         response.setContentType("text/html");
 
