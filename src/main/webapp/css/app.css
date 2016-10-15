@@ -63,3 +63,7 @@ div.container {
   vertical-align: middle;  /* vertical alignment of the inline element */
   font: 16px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;        /* <-- reset the font property */
 }
+
+.small-loading {
+  width: 30px;
+}
