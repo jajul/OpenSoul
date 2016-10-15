@@ -9,7 +9,8 @@ var params = getHashParams(),
     dialog,
     showLog = true,
     currentCall = null,
-    outboundCall = null;
+    outboundCall = null,
+    videoURL;
 
 function getHashParams() {
     var hashParams = {};
@@ -89,6 +90,12 @@ function onConnectionEstablished() {
         '<input type="text" class="form-control" id="inputLogin_name" placeholder="Login">' +
         '</div>' +
         '</div>' +
+        '<div class="form-group">'+
+        '<label for="inputPassword" class="col-sm-2 control-label">Password</label>'+
+        '<div class="col-sm-10">'+
+        '<input type="password" class="form-control" id="inputPassword" placeholder="Password">'+
+        '</div>'+
+        '</div>'+
         '<input type="submit" value="submit" class="hidden" />' +
         '</form>' +
         '</div>');
@@ -110,6 +117,7 @@ function onConnectionEstablished() {
                     username = $('#inputUsername').val();
                     useremail = $('#inputUseremail').val();
                     login_name = $('#inputLogin_name').val();
+                    password = $('#inputPassword').val();
                     login();
                     e.preventDefault();
                 });
@@ -122,7 +130,7 @@ function onConnectionEstablished() {
 // Login function
 function login() {
     log(username + " is going to connect as " + login_name + " to " + application_name);
-    voxAPI.login(login_name + "@" + "videorecord" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
+    voxAPI.login(login_name + "@" + "videorecord" + "." + "samaramaks" + ".voximplant.com", password);
 }
 
 // Connection with VoxImplant failed
@@ -266,7 +274,7 @@ function createCall() {
     $('#cancelButton').click(function () {
         currentCall.hangup();
     });
-    log("Calling to " + document.getElementById('phonenum').value);
+    log("Calling to admin");
 
     //outboundCall = currentCall = voxAPI.call(document.getElementById('phonenum').value, true, "TEST CUSTOM DATA", {"X-DirectCall": "true"}); //делаем звонок
     //mm:

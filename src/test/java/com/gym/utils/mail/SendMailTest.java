@@ -8,6 +8,7 @@ import org.junit.Test;
 public class SendMailTest {
     @Test
     public void testEmail() throws Exception {
-        SendMail.generateAndSendEmail("Julia", "yandex@yandex.ru", "google.com");
+        SendMail sendMail =new SendMail();
+        sendMail.generateAndSendEmail("Julia", "yandex@yandex.ru", "google.com");
     }
 }

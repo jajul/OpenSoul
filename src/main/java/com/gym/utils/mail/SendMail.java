@@ -18,7 +18,10 @@ import java.util.Properties;
 public class SendMail {
     private static final Logger logger = LogManager.getLogger(SendMail.class);
 
-    public static void generateAndSendEmail(String user, String email, String link) throws AddressException, MessagingException {
+    public void generateAndSendEmail(String user, String email, String link) throws AddressException, MessagingException {
+        logger.debug("UserName = {}", user);
+        logger.debug("UserEmail = {}", email);
+        logger.debug("Link = {}", link);
         // Step1
         logger.info("\n 1st ===> setup Mail Server Properties..");
         Properties properties = new Properties();

@@ -52,11 +52,15 @@ function printQuestion() {
         state.flow = 'start';
     }
     else if (question.num > 0) {
+        if (question.num == 1) {
+            createCall();
+        }
         // Отображаем следующий вопрос
         state.flow = 'next';
     }
     else if (question.num == -1) {
         // Конец теста
+        disconnectCall();
         state.flow = 'finish';
     }
     render();
