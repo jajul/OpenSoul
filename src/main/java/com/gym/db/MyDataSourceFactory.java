@@ -23,10 +23,9 @@ public class MyDataSourceFactory {
         Properties props = new Properties();
         try (InputStream fis = (InputStream) MyDataSourceFactory.class.getClassLoader().getResourceAsStream("db.properties")) {
             props.load(fis);
-            dataSource = new MysqlDataSource();
-            dataSource.setURL(props.getProperty("MYSQL_DB_URL"));
-            dataSource.setUser(props.getProperty("MYSQL_DB_USERNAME"));
-            dataSource.setPassword(props.getProperty("MYSQL_DB_PASSWORD"));
+            mysqlDataSource.setURL(props.getProperty("MYSQL_DB_URL"));
+            mysqlDataSource.setUser(props.getProperty("MYSQL_DB_USERNAME"));
+            mysqlDataSource.setPassword(props.getProperty("MYSQL_DB_PASSWORD"));
         } catch (IOException e) {
             e.printStackTrace();
         }
