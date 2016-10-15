@@ -34,16 +34,20 @@ public class SendMail {
         Session getMailSession = Session.getDefaultInstance(properties, null);
         MimeMessage generateMailMessage = new MimeMessage(getMailSession);
 
-        for(String recipient: properties.getProperty("mail.list").split(";")) {
+        for (String recipient : properties.getProperty("mail.list").split(";")) {
             generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
         }
 
-        for(String recipient: properties.getProperty("mail.cc.list").split(";")) {
+        for (String recipient : properties.getProperty("mail.cc.list").split(";")) {
             generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(recipient));
         }
         generateMailMessage.setSubject("Greetings from OpenSoul project!");
-        String emailBody = "Video from candidate " + user +  "<a href=\"" + link + "\">...</a>\n<br><br> Regards, <br>OpenSoul Admin";
-        generateMailMessage.setContent(emailBody, "text/html");
+        StringBuilder emailBody = new StringBuilder("Video from candidate ")
+                .append(user)
+                .append(": <a href=\"" + link + "\">" + link + "</a>")
+                .append("<br>Email for contact with candidate: <a href=\"mailto:" + email + ">" + email + "</a>")
+                .append("<br><br>Regards, <br> OpenSoul Admin");
+        generateMailMessage.setContent(emailBody.toString(), "text/html");
         logger.info("Mail Session has been created successfully..");
 
         // Step3
@@ -53,7 +57,7 @@ public class SendMail {
         // Enter your correct gmail UserID and Password
         // if you have 2FA enabled then provide App Specific Password
 
-        transport.connect(properties.getProperty("mail.smtp.server"), properties.getProperty("mail.address"),properties.getProperty("mail.password"));
+        transport.connect(properties.getProperty("mail.smtp.server"), properties.getProperty("mail.address"), properties.getProperty("mail.password"));
         transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
         transport.close();
     }
