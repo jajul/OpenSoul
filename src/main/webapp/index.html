@@ -47,12 +47,12 @@
           <h3 class="panel-title">Interview Video Chat</h3>
         </div>
         <div class="panel panel-info">
-          <div class="panel-heading">Question ${questionNumber}</div>
-          <div class="panel-body">${Question}</div>
+          <div id="question_num" class="panel-heading"></div>
+          <div id="question_text" class="panel-body"></div>
         </div>
         <div class="panel-heading">
           <h3 id="question" num="0"></h3>
-          <button onclick="get_question()">Следующий вопрос</button>
+          <button id="btn_next_question" onclick="get_question()">Let's start!</button>
         </div>
         <div id="content" class="panel-body">
           <div id="voximplant_container"></div>

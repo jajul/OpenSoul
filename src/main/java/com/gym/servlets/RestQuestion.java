@@ -33,8 +33,8 @@ public class RestQuestion extends HttpServlet {
 
         try {
             Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
-            logger.info("Get question after num " + num);
-            Question question = QuestionStore.getQuestion(num+1);
+            logger.info("Get question with num " + num);
+            Question question = QuestionStore.getQuestion(num);
             if(question != null){
                 String resp = question.toJson().toString();
                 logger.debug("response: " + resp);
@@ -42,7 +42,8 @@ public class RestQuestion extends HttpServlet {
             }
             else{
                 JSONObject resp = new JSONObject();
-                resp.put("stop", 1);
+                resp.put("num", -1);
+                logger.debug("response: " + resp);
                 out.write(resp.toString());
             }
         }
