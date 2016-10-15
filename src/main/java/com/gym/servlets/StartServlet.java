@@ -34,14 +34,6 @@ public class StartServlet extends HttpServlet {
 
         response.setContentType("text/html");
 
-        Properties props = new Properties();
-        try (InputStream fis = (InputStream) StartServlet.class.getClassLoader().getResourceAsStream("app.properties")) {
-            props.load(fis);
-            request.setAttribute("application_name", props.getProperty("application_name"));
-            request.setAttribute("account_name", props.getProperty("account_name"));
-            request.setAttribute("password", props.getProperty("password"));
-        }
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
 

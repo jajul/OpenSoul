@@ -1,6 +1,7 @@
 var params = getHashParams(),
     mode = typeof(params.mode) == 'undefined' ? 'webrtc' : params.mode,
     username,
+    useremail,
     login_name,
     password,
     application_name = typeof(params.appname) == 'undefined' ? 'videochat' : params.appname,
@@ -73,7 +74,13 @@ function onConnectionEstablished() {
         '<div class="form-group">' +
         '<label for="inputUsername" class="col-sm-2 control-label">Username</label>' +
         '<div class="col-sm-10">' +
-        '<input type="text" class="form-control" id="inputUsername" placeholder="Your name">' +
+        '<input type="text" class="form-control" id="inputUsername" placeholder="Your name and surname">' +
+        '</div>' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label for="inputUseremail" class="col-sm-2 control-label">Email</label>' +
+        '<div class="col-sm-10">' +
+        '<input type="text" class="form-control" id="inputUseremail" placeholder="Your email">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
@@ -101,6 +108,7 @@ function onConnectionEstablished() {
                 $('#inputUsername').focus();
                 $('#authForm form').on('submit', function (e) {
                     username = $('#inputUsername').val();
+                    useremail = $('#inputUseremail').val();
                     login_name = $('#inputLogin_name').val();
                     login();
                     e.preventDefault();

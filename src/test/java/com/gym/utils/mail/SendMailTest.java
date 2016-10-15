@@ -1,4 +1,4 @@
-package com.gym.mail;
+package com.gym.utils.mail;
 
 import org.junit.Test;
 
@@ -8,6 +8,6 @@ import org.junit.Test;
 public class SendMailTest {
     @Test
     public void testEmail() throws Exception {
-        SendMail.generateAndSendEmail();
+        SendMail.generateAndSendEmail("Julia", "yandex@yandex.ru", "google.com");
     }
 }

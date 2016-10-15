@@ -1,4 +1,4 @@
-package com.gym.mail;
+package com.gym.utils.mail;
 
 import com.gym.servlets.StartServlet;
 import org.apache.logging.log4j.LogManager;
@@ -8,10 +8,8 @@ import javax.mail.*;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.Properties;
 
 /**
@@ -20,7 +18,7 @@ import java.util.Properties;
 public class SendMail {
     private static final Logger logger = LogManager.getLogger(SendMail.class);
 
-    public static void generateAndSendEmail() throws AddressException, MessagingException {
+    public static void generateAndSendEmail(String user, String email, String link) throws AddressException, MessagingException {
         // Step1
         logger.info("\n 1st ===> setup Mail Server Properties..");
         Properties properties = new Properties();
@@ -44,7 +42,7 @@ public class SendMail {
             generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress(recipient));
         }
         generateMailMessage.setSubject("Greetings from OpenSoul project!");
-        String emailBody = "Test email by Crunchify.com JavaMail API example. " + "<br><br> Regards, <br>Crunchify Admin";
+        String emailBody = "Video from candidate " + user +  "<a href=\"" + link + "\">...</a>\n<br><br> Regards, <br>OpenSoul Admin";
         generateMailMessage.setContent(emailBody, "text/html");
         logger.info("Mail Session has been created successfully..");
 
