@@ -1,5 +1,7 @@
 package com.gym.logic.question;
 
+import org.json.JSONObject;
+
 /**
  * Created by Gochan on 15.10.2016.
  */
@@ -9,7 +11,6 @@ public class Question {
     private Integer num;
 
     public Question(String text, String answer, Integer num) {
-        // test
         this.text = text;
         this.answer = answer;
         this.num = num;
@@ -37,5 +38,12 @@ public class Question {
 
     public void setNum(Integer num) {
         this.num = num;
+    }
+
+    public JSONObject toJson(){
+        JSONObject json = new JSONObject();
+        json.put("text", this.text);
+        json.put("num", this.num);
+        return json;
     }
 }

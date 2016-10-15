@@ -32,15 +32,20 @@ public class QuestionStore {
     public static Question getQuestion(Integer num) throws Exception{
         try(Connection conn = MyDataSourceFactory.getConnection()){
             Statement st = conn.createStatement();
-            String sql = String.format("select TEXT, ANSWER from QUESTION where NUM=%d", num);
+            String sql = String.format("select TEXT, ANSWER, NUM from QUESTION where NUM=%d", num);
+            logger.debug(String.format("executeQuery: %s", sql));
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
-                return new Question(rs.getString("TEXT"), rs.getString("Answer"), rs.getInt("NUM"));
+                Question question = new Question(rs.getString("TEXT"), rs.getString("Answer"), rs.getInt("NUM"));
+                logger.debug(String.format("Received question: %s", question.toJson().toString()));
+                return question;
+            }
+            else{
+                return null;
             }
         }
         catch(Exception ex){
             throw new Exception(ex);
         }
-        return null;
     }
 }

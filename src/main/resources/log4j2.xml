@@ -13,7 +13,8 @@
                 <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="2 MB"/>
             </Policies>
         </RollingFile>
         <RollingFile name="error-log" fileName="${log-path}/error.log"
@@ -30,9 +31,12 @@
         <Logger name="com.gym" level="error" additivity="false">
             <appender-ref ref="error-log" level="error"/>
         </Logger>
+        <Logger name="com.gym" level="debug" additivity="false">
+            <appender-ref ref="trace-log" level="debug"/>
+            <appender-ref ref="console-log" level="debug"/>
+        </Logger>
         <Root level="debug" additivity="false">
             <AppenderRef ref="console-log"/>
-            <AppenderRef ref="trace-log"/>
         </Root>
     </Loggers>
 </Configuration>
