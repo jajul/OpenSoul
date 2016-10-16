@@ -275,8 +275,8 @@ function createCall() {
     $('#cancelButton').click(function () {
         currentCall.hangup();
     });
+    log('call to videorec');
     outboundCall = currentCall = voxAPI.call("videorec", true);
-
     currentCall.addEventListener(VoxImplant.CallEvents.Connected, onCallConnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
@@ -295,6 +295,7 @@ function disconnectCall() {
 //mm: обработчик приема сообщений
 function onMessageReceived(e) {
     console.error(e);
+    log('onMessageReceived videoURL');
     videoURL = e.text; //URL видео
     log(videoURL);
 }
@@ -359,6 +360,7 @@ function say(speech) {
     speaker_voxAPI.login("speaker_user"+"@"+"sayquestion"+"."+"samaramaks"+".voximplant.com", "voximplant9085com");
     log("Say :"+ speech);
     currentCall = speaker_voxAPI.call('123', false, speech);
+    log("CallConnected: "+speaker_voxAPI.id());
     currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
 }
