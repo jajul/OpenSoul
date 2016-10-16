@@ -19,13 +19,16 @@ function render(flow) {
         state.flow = flow;
     }
 
-    $('#quiz_container').toggle(state.type == 'quiz' && state.flow != 'start');
+    $('#quiz_container').toggle(state.type == 'quiz' && state.flow != 'start' && state.flow != 'finish_quiz');
 
     if (state.type == 'quiz' && state.flow != 'start') {
         if (state.flow == 'load_question') {
             toggleLoading($('#quiz_container'));
         }
-        else {
+        else if(state.flow == 'finish_quiz'){
+            printQuizResult();
+        }
+        else if (state.flow == 'question'){
             printQuiz(question);
         }
     }
@@ -97,6 +100,13 @@ function get_question() {
     }
 
     render('load_question');
+
+    if(question !== null && question.type === 'quiz' && question.num === -1){
+        // Закончились вопросы по квизу
+        question.type = 'plain';
+        question.num = 0;
+    }
+
     $.ajax({
         url: '/get_question',
         data: {
@@ -139,7 +149,10 @@ function printQuestion() {
         // Отображаем следующий вопрос
         render('question');
     }
-    else if (question.num == -1) {
+    else if (question.num == -1 && question.type == 'quiz') {
+        render('finish_quiz');
+    }
+    else if (question.num == -1 && question.type == 'plain') {
         // Конец теста
         disconnectCall();
         render('finish');

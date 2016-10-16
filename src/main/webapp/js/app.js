@@ -134,7 +134,7 @@ function onConnectionEstablished() {
 // Login function
 function login() {
     log(username + " is going to connect as " + login_name + " to " + application_name);
-    voxAPI.login(login_name + "@" + "videoaudio" + "." + "samaramaks" + ".voximplant.com", password);
+    voxAPI.login(login_name + "@" + "videorecord" + "." + "samaramaks" + ".voximplant.com", password);
 }
 
 // Connection with VoxImplant failed
@@ -152,22 +152,6 @@ function onConnectionClosed() {
         voxAPI.connect();
     }, 1000);
 }
-
-function onSpeakerConnectionFailed() {
-    log("Connection failed");
-    setTimeout(function () {
-        speaker_voxAPI.connect();
-    }, 1000);
-}
-
-// Connection with VoxImplant closed
-function onSpeakerConnectionClosed() {
-    log("Connection closed");
-    setTimeout(function () {
-        speaker_voxAPI.connect();
-    }, 1000);
-}
-
 
 // Handle authorization result
 function onAuthResult(e) {
@@ -206,15 +190,13 @@ function onAuthResult(e) {
 
 // Call connected - переопределения функций кнопок;  установка изображения с камеры в окно браузера
 function onCallConnected(e) {
-    this_call = e.call;
-    voxAPI.setCallActive(this_call, true);
-    log("CallConnected: " + this_call.id());
+    log("CallConnected: " + currentCall.id());
     if ($('#cancelButton').length) {
         $('#cancelButton').html('Disconnect');
     } else {
         $('#callButton').replaceWith('<button type="button" class="btn btn-danger" id="cancelButton">Disconnect</button>');
         $('#cancelButton').click(function () {
-            this_call.hangup();
+            currentCall.hangup();
         });
     }
     if (mode == 'flash') {
@@ -222,8 +204,8 @@ function onCallConnected(e) {
             sendVideo(true);
             showRemoteVideo(true);
             // For Flash WebSDK function call is required
-            this_call.setRemoteVideoSize(320, 240);
-            this_call.setRemoteVideoPosition(330, 0);
+            currentCall.setRemoteVideoSize(320, 240);
+            currentCall.setRemoteVideoPosition(330, 0);
         }, 1000);
     } else {
         //обращение к API
@@ -231,7 +213,7 @@ function onCallConnected(e) {
         showRemoteVideo(true);
 
         // For WebRTC just using JS/CSS for transformation
-        $video = $(document.getElementById(this_call.getVideoElementId()));
+        $video = $(document.getElementById(currentCall.getVideoElementId()));
         $video.appendTo('#voximplant_container');
         $video.css('margin-left', '10px').css('width', '320px').css('height', '240px').css('float', 'left');
         $video[0].play();
@@ -276,7 +258,7 @@ function onMicAccessResult(e) {
     } else {
         // Access was denied
         $('div.bootstrap-dialog').addClass('type-danger');
-        log('You have to allow access to your microphone to use the service');
+        dialog.setMessage('You have to allow access to your microphone to use the service');
     }
 }
 
@@ -299,7 +281,7 @@ function createCall() {
         currentCall.hangup();
     });
     log('call to videorec');
-    currentCall = voxAPI.call("video", true);
+    outboundCall = currentCall = voxAPI.call("videorec", true);
     currentCall.addEventListener(VoxImplant.CallEvents.Connected, onCallConnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
@@ -379,14 +361,11 @@ function fullScreenmode(flag) {
 
 //mm сказать переданный текст
 function say(speech) {
-    voxAPI.addEventListener(VoxImplant.Events.ConnectionFailed, onSpeakerConnectionFailed);
-    voxAPI.addEventListener(VoxImplant.Events.ConnectionClosed, onSpeakerConnectionClosed);
-
-    // voxAPI.login("speaker_user" + "@" + "sayquestion" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
+    var speaker_voxAPI = VoxImplant.getInstance();
+    speaker_voxAPI.login("speaker_user" + "@" + "sayquestion" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
     log("Say :" + speech);
-    voiceCall = voxAPI.call('audio', false, speech);
-    log("CallConnected: " + voiceCall.id());
-    voxAPI.setCallActive(voiceCall, true);
-    // voiceCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
-    // voiceCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
+    currentCall = speaker_voxAPI.call('123', false, speech);
+    log("CallConnected: " + speaker_voxAPI.call.id);
+    currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
+    currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
 }

@@ -4,6 +4,7 @@ import com.gym.logic.question.Question;
 import com.gym.logic.question.QuestionStore;
 import com.gym.user.User;
 import com.gym.user.UserInfo;
+import com.gym.user.UserQuizResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
@@ -19,9 +20,9 @@ import java.io.PrintWriter;
 /**
  * Created by Gochan on 15.10.2016.
  */
-@WebServlet("/send_quiz_result")
-public class QuizResult extends HttpServlet {
-    private static final Logger logger = LogManager.getLogger(QuizResult.class);
+@WebServlet("/get_quiz_result")
+public class GetQuizResult extends HttpServlet {
+    private static final Logger logger = LogManager.getLogger(GetQuizResult.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,18 +35,16 @@ public class QuizResult extends HttpServlet {
 
         try {
             String login = request.getParameter("login");
-            String userName = request.getParameter("user");
-            String email = request.getParameter("email");
-            String type = request.getParameter("type");
-            Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
-            Integer answer = (request.getParameter("answer") != null ? Integer.parseInt(request.getParameter("answer")) : 0);
-            logger.debug(String.format("request: send_quiz_result[login='%s', userName='%s', email='%s', type='%s', num='%s', answer='%s']", login, userName, email, type, num, answer));
+            logger.debug(String.format("request: get_quiz_result[login='%s']", login));
 
-            Question question = QuestionStore.getQuestionByUser(login, type, num);
+            User user = UserInfo.getUser(login);
+            logger.debug(String.format("Get quiz result for user: %s", user.getUserName()));
 
-            User user = UserInfo.getUser(login, userName, email);
-            user.getQuizResult().addResult(question, answer);
+            UserQuizResult quizResult = user.getQuizResult();
+            Double result = quizResult.getTestResult();
+            logger.debug(String.format("Result of %s is %f", user.getUserName(), result));
 
+            out.write(new JSONObject().put("result", result).toString());
         }
         catch(Exception ex){
             logger.error(ex);
