@@ -162,12 +162,12 @@ function onAuthResult(e) {
         showLocalVideo(true);
         if (mode == 'flash') {
             // Camera settings
-            voxAPI.setLocalVideoSize(320, 240);
+            voxAPI.setLocalVideoSize(640, 480);
             voxAPI.setVideoSettings({
                 "profile": "baseline",
                 "level": "2.1",
-                "width": "320",
-                "height": "240",
+                "width": "640",
+                "height": "480",
                 "fps": "25",
                 "bandwidth": "65536",
                 "quality": "75",
@@ -275,10 +275,6 @@ function createCall() {
     $('#cancelButton').click(function () {
         currentCall.hangup();
     });
-    log("Calling to admin");
-
-    //outboundCall = currentCall = voxAPI.call(document.getElementById('phonenum').value, true, "TEST CUSTOM DATA", {"X-DirectCall": "true"}); //делаем звонок
-    //mm:
     outboundCall = currentCall = voxAPI.call("videorec", true);
 
     currentCall.addEventListener(VoxImplant.CallEvents.Connected, onCallConnected);

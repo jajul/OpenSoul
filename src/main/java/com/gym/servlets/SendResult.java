@@ -29,7 +29,7 @@ public class SendResult extends HttpServlet {
         try {
             SendMail sendMail = new SendMail();
             sendMail.generateAndSendEmail(request.getParameter("user"), request.getParameter("email"), request.getParameter("URL").replace("{\"url\":\"", "").replace("\"}", ""));
-        } catch (MessagingException e) {
+        } catch (Exception e) {
             logger.error("Can't send email", e);
         }
     }
