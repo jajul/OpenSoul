@@ -57,13 +57,13 @@ public class SendMail {
 
         for (Question question : user.getQuizResult().getQuizResults().keySet()) {
             QuizQuetion q = (QuizQuetion) question;
-            emailBody.append("<br>Question: ").append(q.getText()).append("<ul>");
+            emailBody.append("<br>Question: ").append(q.getText()).append("<ol>");
             q.getOptions().stream().forEach(x ->  emailBody.append("<li>").append(x.getText()).append("</li>"));
-            emailBody.append("</ul><br>Candidate' answer: ").append(user.getQuizResult().getQuizResults().get(question));
-            emailBody.append("<br>Right answer: ").append(q.getAnswer_num());
+            emailBody.append("</ol>Candidate' answer: ").append(user.getQuizResult().getQuizResults().get(question));
+            emailBody.append("<br>Right answer: ").append(q.getAnswer_num()).append("<br><hr>");
         }
 
-        emailBody.append("<hr><br>Email for contact with candidate: <a href=\"mailto:" + user.getUserName() + ">" + user.getUserEmail() + "</a>")
+        emailBody.append("<br>Email for contact with candidate: <a href=\"mailto:" + user.getUserName() + ">" + user.getUserEmail() + "</a>")
                 .append("<br><br>Regards, <br> OpenSoul Admin");
         generateMailMessage.setContent(emailBody.toString(), "text/html");
         logger.info("Mail Session has been created successfully..");

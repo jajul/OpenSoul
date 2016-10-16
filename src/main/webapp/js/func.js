@@ -72,7 +72,7 @@ function get_question() {
     var answer = -1;
 
     if ($("input:checked") != null && typeof ($("input:checked").val()) !== "undefined") {
-        answer = $("input:checked").val();
+        answer = $('[name="answer"]:checked').attr('value');
     }
 
     if (answer > 0) {

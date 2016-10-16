@@ -38,7 +38,7 @@ public class QuizResult extends HttpServlet {
             String email = request.getParameter("email");
             String type = request.getParameter("type");
             Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
-            Integer answer = (request.getParameter("answer") != null ? Integer.parseInt(request.getParameter("num")) : 0);
+            Integer answer = (request.getParameter("answer") != null ? Integer.parseInt(request.getParameter("answer")) : 0);
 
             Question question = QuestionStore.getQuestionByUser(login, type, num);
 

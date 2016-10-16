@@ -13,21 +13,7 @@
 function printQuiz(data){
     var html = '<form>'
     data.options.forEach(function(item){
-        html += '<div class="radio" id="answers">\
-                    <label> \
-                        <input type="radio" name="answer" onclick="showNext()" value="'+item.num+'" /> '+item.text+' \
-                    </label>\
-                 </div>';
-    });
-    html += '</form>';
-
-    $('#quiz_container').show().html(html);
-}
-
-function printTestResults(){
-    var html = '<form>'
-    data.options.forEach(function(item){
-        html += '<div class="radio" id="answers">\
+        html += '<div class="radio">\
                     <label> \
                         <input type="radio" name="answer" onclick="showNext()" value="'+item.num+'" /> '+item.text+' \
                     </label>\
