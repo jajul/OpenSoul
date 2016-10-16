@@ -9,11 +9,18 @@ public class PlainQuestion extends Question {
     private String text;
     private String answer;
     private Integer num;
+    private String theme;
 
-    public PlainQuestion(String text, String answer, Integer num) {
+    public PlainQuestion(String text, String theme, String answer, Integer num) {
         this.text = text;
         this.answer = answer;
         this.num = num;
+        this.theme = theme;
+    }
+
+    @Override
+    public String getTheme() {
+        return theme;
     }
 
     public String getText() {
@@ -41,7 +48,7 @@ public class PlainQuestion extends Question {
     }
 
     @Override
-    public JSONObject toJSON(){
+    public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         json.put("type", "plain");
         json.put("text", this.text);

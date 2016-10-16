@@ -156,7 +156,7 @@ function onAuthResult(e) {
     if (e.result) {
         // Authorized successfully
         dialog.close();
-        var title = $('.panel-title').html() + '. Hi ' + username;
+        var title = $('.panel-title').html();
         $('.panel-title').html(title);
         $('#controls').slideDown();
         showLocalVideo(true);

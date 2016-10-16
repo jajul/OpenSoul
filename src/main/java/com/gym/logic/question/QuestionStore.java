@@ -67,7 +67,7 @@ public class QuestionStore {
             logger.debug(String.format("executeQuery: %s", sql));
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
-                PlainQuestion question = new PlainQuestion(rs.getString("TEXT"), rs.getString("Answer"), rs.getInt("NUM"));
+                PlainQuestion question = new PlainQuestion(rs.getString("TEXT"), theme, rs.getString("Answer"), rs.getInt("NUM"));
                 logger.debug(String.format("Received plain question: %s", question.toJSON().toString()));
                 return question;
             }

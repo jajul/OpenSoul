@@ -7,4 +7,10 @@ import org.json.JSONObject;
  */
 public abstract class Question {
     public abstract JSONObject toJSON();
+
+    public abstract String getTheme();
+
+    public abstract Integer getNum();
+
+    public abstract String getText();
 }

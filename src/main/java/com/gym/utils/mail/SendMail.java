@@ -1,6 +1,8 @@
 package com.gym.utils.mail;
 
-import com.gym.servlets.StartServlet;
+import com.gym.logic.question.Question;
+import com.gym.logic.question.QuizQuetion;
+import com.gym.user.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,14 +20,14 @@ import java.util.Properties;
 public class SendMail {
     private static final Logger logger = LogManager.getLogger(SendMail.class);
 
-    public void generateAndSendEmail(String user, String email, String link) throws AddressException, MessagingException {
-        logger.debug("UserName = {}", user);
-        logger.debug("UserEmail = {}", email);
+    public void generateAndSendEmail(User user, String link) throws AddressException, MessagingException {
+        logger.debug("UserName = {}", user.getUserName());
+        logger.debug("UserEmail = {}", user.getUserEmail());
         logger.debug("Link = {}", link);
         // Step1
         logger.info("\n 1st ===> setup Mail Server Properties..");
         Properties properties = new Properties();
-        try (InputStream fis = (InputStream) StartServlet.class.getClassLoader().getResourceAsStream("mail.properties")) {
+        try (InputStream fis = (InputStream) SendMail.class.getClassLoader().getResourceAsStream("mail.properties")) {
             properties.load(fis);
         } catch (IOException e) {
             logger.error("Can't find email properties");
@@ -46,9 +48,22 @@ public class SendMail {
         }
         generateMailMessage.setSubject("Greetings from OpenSoul project!");
         StringBuilder emailBody = new StringBuilder("Video from candidate ")
-                .append(user)
+                .append(user.getUserName())
                 .append(": <a href=\"" + link + "\">" + link + "</a>")
-                .append("<br>Email for contact with candidate: <a href=\"mailto:" + email + ">" + email + "</a>")
+                .append("<br><hr>")
+                .append("<br>Candidate' test results: ")
+                .append(user.getQuizResult().getTestResult())
+                .append("<hr>");
+
+        for (Question question : user.getQuizResult().getQuizResults().keySet()) {
+            QuizQuetion q = (QuizQuetion) question;
+            emailBody.append("<br>Question: ").append(q.getText()).append("<ul>");
+            q.getOptions().stream().forEach(x ->  emailBody.append("<li>").append(x.getText()).append("</li>"));
+            emailBody.append("</ul><br>Candidate' answer: ").append(user.getQuizResult().getQuizResults().get(question));
+            emailBody.append("<br>Right answer: ").append(q.getAnswer_num());
+        }
+
+        emailBody.append("<hr><br>Email for contact with candidate: <a href=\"mailto:" + user.getUserName() + ">" + user.getUserEmail() + "</a>")
                 .append("<br><br>Regards, <br> OpenSoul Admin");
         generateMailMessage.setContent(emailBody.toString(), "text/html");
         logger.info("Mail Session has been created successfully..");

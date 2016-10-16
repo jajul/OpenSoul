@@ -79,6 +79,10 @@ public class QuizQuetion extends Question {
         return null;
     }
 
+    public List<QuizOption> getOptions() {
+        return options;
+    }
+
     @Override
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
