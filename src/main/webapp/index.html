@@ -24,6 +24,7 @@
     <script type="text/javascript" src="js/bootstrap-dialog.js"></script>
     <script type="text/javascript" src="https://cdn.voximplant.com/voximplant.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/quiz.js"></script>
     <script type="text/javascript" src="js/func.js"></script>
     <script>
 
@@ -53,42 +54,33 @@
                 <div id="question_num" class="panel-heading"></div>
                 <div id="question_text" class="panel-body"></div>
             </div>
-            <!-- След. вопрос -->
-            <!--<div class="panel-heading">
-              <h3 id="question" num="0"></h3>
-              <button type="button" class="btn btn-success" onclick="get_question()"></span> Next Step</button>
-            </div>-->
-            <!-- Область камеры -->
-            <div id="content" class="panel-body">
-                <div id="voximplant_container"></div>
 
-                <!-- Поле ввода
-                <div id="controls" style="display:none">
-                  <div class="input-group">
-                    <span class="input-group-addon">@</span>
-                    <input id="phonenum" type="text" class="form-control" placeholder="Username">
-                  </div>-->
+            <div id="content" class="panel-body">
+                <!-- Тест -->
+                <div id="quiz_container"></div>
+
+                <!-- Область камеры -->
+                <div id="voximplant_container"></div>
 
                 <!-- Кнопки -->
                 <div class="btn-group btn-group-justified">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-success" id="startButton" onclick="get_question()">Start
-                        </button>
-                        <button type="button" class="btn btn-success" id="nextButton" onclick="get_question()"><span
-                                class="glyphicon glyphicon-forward"></span> Next
-                        </button>
-                        <button type="button" class="btn btn-success" id="sendButton" onclick="send_result()"><span
-                                class="glyphicon glyphicon-ok"></span> Send
-                        </button>
+                        <!-- Начать -->
+                        <button type="button" class="btn btn-success" id="startButton" onclick="get_question()">Start</button>
+                        <!-- След. вопрос -->
+                        <button type="button" class="btn btn-success" id="nextButton" onclick="get_question()"><span class="glyphicon glyphicon-forward"></span> Next</button>
+                        <!-- Отправить результат -->
+                        <button type="button" class="btn btn-success" id="sendButton" onclick="send_result()"><span class="glyphicon glyphicon-ok"></span> Send</button>
+                        <!-- Ваши ответы успешно отправлены -->
                         <div class="btn btn-success" id="sendSuccess">Ваши ответы успешно отправлены!</div>
+                        <!-- Вертушка -->
                         <div class="btn btn-success" id="loadingButton" disabled><img class="small-loading" src="img/loading.gif"/></div>
                         <!--  <button type="button" class="btn btn-default" id="fsButton">Enter fullscreen</button>-->
                     </div>
                 </div>
             </div>
             <!-- Логи-->
-            <div id="log" class="well hidden">
-            </div>
+            <div id="log" class="well hidden"></div>
         </div>
     </div>
 </div>

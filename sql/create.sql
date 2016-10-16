@@ -1,6 +1,6 @@
 CREATE DATABASE `app` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
-CREATE TABLE `question` (
+CREATE TABLE `app`.`question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `text` varchar(1000) DEFAULT NULL,
   `answer` varchar(1000) DEFAULT NULL,

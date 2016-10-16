@@ -3,7 +3,8 @@
  */
 var question = null;
 var state = {
-    flow: 'start', // load_question, next, finish, load_sending, sent
+    type: 'quiz',
+    flow: 'start' // load_question, question, finish_quiz, finish, load_sending, sent
 };
 var loading = '<img class="small-loading" src="img/loading.gif"/>';
 
@@ -18,11 +19,24 @@ function render(flow){
         state.flow = flow;
     }
 
-    $('#question_num').toggle( state.flow=='next' || state.flow=='load_question' );
+    $('#quiz_container').toggle( state.type == 'quiz' && state.flow != 'start' );
+
+    if(state.type == 'quiz' && state.flow != 'start'){
+        if(state.flow == 'load_question'){
+            toggleLoading($('#quiz_container'));
+        }
+        else {
+            printQuiz(question);
+        }
+    }
+
+    $('#voximplant_container').toggle( state.type == 'plain' );
+
+    $('#question_num').toggle( state.flow=='question' || state.flow=='load_question' );
     if(state.flow=='load_question'){
         toggleLoading($('#question_num'));
     }
-    else if(state.flow=='next'){
+    else if(state.flow=='question'){
         $('#question_num').show().html('Question ' + question.num);
     }
 
@@ -30,14 +44,14 @@ function render(flow){
     if(state.flow=='load_question'){
         toggleLoading($('#question_text'));
     }
-    else if(state.flow=='next'){
+    else if(state.flow=='question'){
         $('#question_text').show().html(question.text);
     }
     else if(state.flow=='finish'){
         $('#question_text').html('Thank you!');
     }
     $('#startButton').toggle( state.flow=='start' );
-    $('#nextButton').toggle( state.flow=='next' || state.flow=='load_question' );
+    $('#nextButton').toggle( state.flow=='question' || state.flow=='load_question' );
     $('#sendButton').toggle( state.flow=='finish' );
     $('#sendSuccess').toggle( state.flow=='sent' );
     $('#loadingButton').toggle( state.flow=='load_sending' );
@@ -54,10 +68,14 @@ function get_question() {
     render('load_question');
     $.ajax({
         url: '/get_question',
-        data: {num: (question!=null ? question.num + 1 : 1)},
+        data: {
+            user: login_name,
+            type: (question!=null ? question.type : 'quiz'), // вначале пытаемся дать квиз
+            num: (question!=null ? question.num + 1 : 1)
+        },
         dataType: 'json',
         success: function (data) {
-            setQuestion(data.num, data.text);
+            setQuestion(data);
         },
         error: function (xhr, error) {
             console.error(xhr);
@@ -65,10 +83,14 @@ function get_question() {
     });
 }
 
-function setQuestion(num, text) {
+function setQuestion(data) {
+    state.type = data.type;
     question = {};
-    question.num = num;
-    question.text = text;
+    question.type = data.type;
+    question.num = data.num;
+    question.text = data.text;
+    question.options = data.options;
+
     printQuestion();
 }
 
@@ -82,7 +104,7 @@ function printQuestion() {
             createCall();
         }
         // Отображаем следующий вопрос
-        render('next');
+        render('question');
     }
     else if (question.num == -1) {
         // Конец теста
@@ -115,3 +137,4 @@ function send_result() {
 function toggleLoading($elem){
     $elem.show().html($('<img class="small-loading" src="img/loading.gif"/>'));
 }
+

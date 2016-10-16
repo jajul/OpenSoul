@@ -1,11 +1,8 @@
 package com.gym.servlets;
 
-import com.gym.logic.question.Question;
-import com.gym.logic.question.QuestionStore;
 import com.gym.utils.mail.SendMail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletException;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Created by Gochan on 15.10.2016.

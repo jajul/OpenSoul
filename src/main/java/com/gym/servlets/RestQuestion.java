@@ -1,12 +1,12 @@
 package com.gym.servlets;
 
+import com.gym.logic.question.PlainQuestion;
 import com.gym.logic.question.Question;
 import com.gym.logic.question.QuestionStore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,11 +32,13 @@ public class RestQuestion extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            String user = request.getParameter("user");
+            String type = request.getParameter("type");
             Integer num = (request.getParameter("num") != null ? Integer.parseInt(request.getParameter("num")) : 1);
-            logger.info("Get question with num " + num);
-            Question question = QuestionStore.getQuestion(num);
+            logger.info(String.format("request: get_question[user='%s', type='%s', num=%d]", user, type, num));
+            Question question = QuestionStore.getQuestionByUser(user, type, num);
             if(question != null){
-                String resp = question.toJson().toString();
+                String resp = question.toJSON().toString();
                 logger.debug("response: " + resp);
                 out.write(resp);
             }
@@ -49,6 +51,7 @@ public class RestQuestion extends HttpServlet {
         }
         catch(Exception ex){
             logger.error(ex);
+            out.write(new JSONObject(ex).toString());
         }
     }
 }
