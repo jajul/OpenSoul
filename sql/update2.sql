@@ -1,6 +1,8 @@
 ALTER TABLE `app`.`question`
 ADD COLUMN `theme` VARCHAR(100) NULL AFTER `num`;
 
+SET SQL_SAFE_UPDATES = 0;
+
 UPDATE `app`.`question` SET `theme`='Java' WHERE `num`='1';
 UPDATE `app`.`question` SET `theme`='Java' WHERE `num`='2';
 UPDATE `app`.`question` SET `theme`='Java' WHERE `num`='3';
