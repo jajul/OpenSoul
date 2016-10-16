@@ -52,8 +52,8 @@ public class SendMail {
                 .append(": <a href=\"" + link + "\">" + link + "</a>")
                 .append("<br><hr>")
                 .append("<br>Candidate' test results: ")
-                .append(user.getQuizResult().getTestResult())
-                .append("<hr>");
+                .append(user.getQuizResult().getTestResult()*100)
+                .append("%<hr>");
 
         for (Question question : user.getQuizResult().getQuizResults().keySet()) {
             QuizQuetion q = (QuizQuetion) question;
