@@ -124,7 +124,8 @@ function onConnectionEstablished() {
             }
         });
         dialog.open();
-    } else login();
+    } else {login();
+    };
 }
 
 // Login function
@@ -354,4 +355,14 @@ function fullScreenmode(flag) {
     } else {
         // enable FullScreen in Flash  mode
     }
+}
+
+//mm сказать переданный текст
+function say(speech) {
+    var speaker_voxAPI = VoxImplant.getInstance();
+    speaker_voxAPI.login("speaker_user"+"@"+"sayquestion"+"."+"samaramaks"+".voximplant.com", "voximplant9085com");
+    log("Say :"+ speech);
+    currentCall = speaker_voxAPI.call('123', false, speech);
+    currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
+    currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
 }

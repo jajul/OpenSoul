@@ -38,7 +38,8 @@ function render(flow){
     }
     else if(state.flow=='question'){
         $('#question_num').show().html('Question ' + question.num);
-    }
+        $('#question_text').show().html(question.text);
+        }
 
     $('#question_text').toggle( state.flow!='start' );
     if(state.flow=='load_question'){
@@ -46,9 +47,12 @@ function render(flow){
     }
     else if(state.flow=='question'){
         $('#question_text').show().html(question.text);
+        console.log(question.text);
+        say(question.text);
     }
     else if(state.flow=='finish'){
         $('#question_text').html('Thank you!');
+        say("Thank you for the interview. Now you can send the video to the employer");
     }
     $('#startButton').toggle( state.flow=='start' );
     $('#nextButton').toggle( state.flow=='question' || state.flow=='load_question' );
@@ -100,7 +104,7 @@ function printQuestion() {
         render('start');
     }
     else if (question.num > 0) {
-        if (question.num == 1) {
+        if (question.num == 1 && question.type=='plain') {
             createCall();
         }
         // Отображаем следующий вопрос
