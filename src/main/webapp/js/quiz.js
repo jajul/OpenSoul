@@ -15,7 +15,7 @@ function printQuiz(data){
     data.options.forEach(function(item){
         html += '<div class="radio">\
                     <label> \
-                        <input type="radio" value="'+item.num+'" /> '+item.text+' \
+                        <input type="radio" name="answers" value="'+item.num+'" /> '+item.text+' \
                     </label>\
                  </div>';
     });
