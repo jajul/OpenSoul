@@ -90,12 +90,12 @@ function onConnectionEstablished() {
         '<input type="text" class="form-control" id="inputLogin_name" placeholder="Login">' +
         '</div>' +
         '</div>' +
-        '<div class="form-group">'+
-        '<label for="inputPassword" class="col-sm-2 control-label">Password</label>'+
-        '<div class="col-sm-10">'+
-        '<input type="password" class="form-control" id="inputPassword" placeholder="Password">'+
-        '</div>'+
-        '</div>'+
+        '<div class="form-group">' +
+        '<label for="inputPassword" class="col-sm-2 control-label">Password</label>' +
+        '<div class="col-sm-10">' +
+        '<input type="password" class="form-control" id="inputPassword" placeholder="Password">' +
+        '</div>' +
+        '</div>' +
         '<input type="submit" value="submit" class="hidden" />' +
         '</form>' +
         '</div>');
@@ -124,8 +124,10 @@ function onConnectionEstablished() {
             }
         });
         dialog.open();
-    } else {login();
-    };
+    } else {
+        login();
+    }
+    ;
 }
 
 // Login function
@@ -187,17 +189,17 @@ function onAuthResult(e) {
 
 // Call connected - переопределения функций кнопок;  установка изображения с камеры в окно браузера
 function onCallConnected(e) {
-    log("CallConnected: "+currentCall.id());
+    log("CallConnected: " + currentCall.id());
     if ($('#cancelButton').length) {
         $('#cancelButton').html('Disconnect');
     } else {
         $('#callButton').replaceWith('<button type="button" class="btn btn-danger" id="cancelButton">Disconnect</button>');
-        $('#cancelButton').click(function() {
+        $('#cancelButton').click(function () {
             currentCall.hangup();
         });
     }
     if (mode == 'flash') {
-        setTimeout(function() {
+        setTimeout(function () {
             sendVideo(true);
             showRemoteVideo(true);
             // For Flash WebSDK function call is required
@@ -357,10 +359,10 @@ function fullScreenmode(flag) {
 //mm сказать переданный текст
 function say(speech) {
     var speaker_voxAPI = VoxImplant.getInstance();
-    speaker_voxAPI.login("speaker_user"+"@"+"sayquestion"+"."+"samaramaks"+".voximplant.com", "voximplant9085com");
-    log("Say :"+ speech);
+    speaker_voxAPI.login("speaker_user" + "@" + "sayquestion" + "." + "samaramaks" + ".voximplant.com", "voximplant9085com");
+    log("Say :" + speech);
     currentCall = speaker_voxAPI.call('123', false, speech);
-    log("CallConnected: "+speaker_voxAPI.id());
+    log("CallConnected: " + speaker_voxAPI.call.id);
     currentCall.addEventListener(VoxImplant.CallEvents.Disconnected, onCallDisconnected);
     currentCall.addEventListener(VoxImplant.CallEvents.Failed, onCallFailed);
 }
