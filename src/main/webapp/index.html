@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/bootstrap-dialog.css">
     <link rel="stylesheet" href="css/app.css">
 
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -41,18 +43,21 @@
     </script>
 </head>
 
-<body>
+<body style="background-color: #333;">
+<div class="lefticontextlogo">
+    <!-- Лого с заголовком -->
+    <img src= "img/opendoor.png" class="lefticonfoto" alt="icon">
+    <h4 class="panel-heading"><p style="font-family:Montserrat, sans-serif; font-size:36px; color: #fff">OPENSOUL Interview Video Chat</p></h4>
+</div>
 <div class="jumbotron vertical-center">
     <div class="container">
         <div id="container" class="panel panel-default">
             <!-- Заголовок -->
-            <div class="panel-heading">
-                <h3 class="panel-title">Interview Video Chat</h3>
-            </div>
+
             <!-- Панель номер вопроса - вопрос -->
             <div class="panel panel-info">
-                <div id="question_num" class="panel-heading"></div>
-                <div id="question_text" class="panel-body"></div>
+                <div id="question_num" class="panel-body"><p style="font-family:Montserrat, sans-serif; font-size:24px"></p></div>
+                <div id="question_text" class="panel-body"><p style="font-family:Montserrat, sans-serif; font-size:24px"></p></div>
             </div>
 
             <div id="content" class="panel-body">
@@ -84,3 +89,5 @@
         </div>
     </div>
 </div>
+</body>
+</html>

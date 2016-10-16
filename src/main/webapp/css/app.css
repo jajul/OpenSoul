@@ -3,7 +3,7 @@ html, body {
 }
 
 div.container {
-  width: 740px;
+  width: 940px;
 }
 
 #voximplant_container {
@@ -19,7 +19,7 @@ div.container {
   font-family: Monospace;
 }
 
-#controls {      
+#controls {
   width: 650px;
   margin: 0 auto;
 }
@@ -66,4 +66,37 @@ div.container {
 
 .small-loading {
   width: 30px;
+}
+
+.lefticonfoto{
+  vertical-align: middle;
+  float:left;
+  height: 64px;
+  width: 64px;
+}
+
+.lefticontextlogo{
+  margin: 4px 10px 8px 0px;
+  alignment-adjust: middle;
+  background-color: #333;
+}
+
+/*переопределяем стили bootstrap*/
+.jumbotron {
+  padding: 20px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #333;
+
+}
+
+.panel-info {
+  border-color: #fff;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  font-family:Montserrat, sans-serif;
 }
