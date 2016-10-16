@@ -1,5 +1,7 @@
 package com.gym.servlets;
 
+import com.gym.user.User;
+import com.gym.user.UserInfo;
 import com.gym.utils.mail.SendMail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +29,26 @@ public class SendResult extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
 
         try {
-            SendMail sendMail = new SendMail();
-            sendMail.generateAndSendEmail(request.getParameter("user"), request.getParameter("email"), request.getParameter("URL").replace("{\"url\":\"", "").replace("\"}", ""));
+            String login = request.getParameter("login");
+            String userName = request.getParameter("user");
+            String email = request.getParameter("email");
+
+            User user = UserInfo.getUser(login, userName, email);
+
+            try {
+                SendMail sendMail = new SendMail();
+                String url = "";
+                try {
+                    url = request.getParameter("URL").replace("{\"url\":\"", "").replace("\"}", "");
+                }catch (Exception e){
+                    logger.error(e);
+                }
+                sendMail.generateAndSendEmail(user, url);
+            } catch (Exception e) {
+                logger.error("Can't send email", e);
+            }
         } catch (Exception e) {
-            logger.error("Can't send email", e);
+
         }
     }
 }

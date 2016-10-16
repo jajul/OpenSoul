@@ -1,5 +1,6 @@
 package com.gym.utils.mail;
 
+import com.gym.user.User;
 import org.junit.Test;
 
 /**
@@ -9,6 +10,6 @@ public class SendMailTest {
     @Test
     public void testEmail() throws Exception {
         SendMail sendMail =new SendMail();
-        sendMail.generateAndSendEmail("Julia", "yandex@yandex.ru", "google.com");
+        sendMail.generateAndSendEmail(new User("Julia", "yandex@yandex.ru"), "google.com");
     }
 }
