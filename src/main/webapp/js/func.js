@@ -15,6 +15,7 @@ function startRender() {
 }
 
 function render(flow) {
+    $('#overlay').hide();
     if (flow) {
         state.flow = flow;
     }
@@ -23,7 +24,7 @@ function render(flow) {
 
     if (state.type == 'quiz' && state.flow != 'start') {
         if (state.flow == 'load_question') {
-            toggleLoading($('#quiz_container'));
+            //toggleLoading($('#quiz_container'));
         }
         else if(state.flow == 'finish_quiz'){
             printQuizResult();
@@ -37,7 +38,7 @@ function render(flow) {
 
     $('#question_num').toggle(state.flow == 'question' || state.flow == 'load_question');
     if (state.flow == 'load_question') {
-        toggleLoading($('#question_num'));
+        //toggleLoading($('#question_num'));
     }
     else if (state.flow == 'question') {
         $('#question_num').show().html('Question ' + question.num);
@@ -46,7 +47,8 @@ function render(flow) {
 
     $('#question_text').toggle(state.flow != 'start');
     if (state.flow == 'load_question') {
-        toggleLoading($('#question_text'));
+        $('#overlay').show();
+        //toggleLoading($('#question_text'));
     }
     else if (state.flow == 'question') {
         $('#question_text').show().html(question.text);
@@ -58,12 +60,12 @@ function render(flow) {
         say("Thank you for the interview. Now you can send the video to the employer");
     }
     $('#startButton').toggle(state.flow == 'start');
-    $('#nextButton').toggle((state.flow == 'question' || state.flow == 'load_question' ) && !(state.type == 'quiz' && typeof ($("input:checked").val()) == "undefined"));
+    $('#nextButton').toggle((state.flow == 'question' || state.flow == 'load_question' ));
     $('#sendButton').toggle(state.flow == 'finish');
     $('#sendSuccess').toggle(state.flow == 'sent');
     $('#loadingButton').toggle(state.flow == 'load_sending');
 
-    if (state.flow == 'load_question' || state.flow == 'load_sending') {
+    if (state.flow == 'load_question' || state.flow == 'load_sending' || (state.type === 'quiz' && state.flow==='question' && $("input:checked").val() == undefined)) {
         $('.btn').prop('disabled', true);
     }
     else {

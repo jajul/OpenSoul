@@ -66,6 +66,8 @@ div.container {
 
 .small-loading {
   width: 30px;
+  top: 100px;
+  position: relative;
 }
 
 .lefticonfoto{
@@ -95,8 +97,24 @@ div.container {
 }
 
 .btn-success {
+  margin:10px;
+  width: 100px;
   color: #fff;
   background-color: #5cb85c;
   border-color: #4cae4c;
   font-family:Montserrat, sans-serif;
+}
+
+.question, .quiz {
+  margin: 10px;
+  font-family: Montserrat, sans-serif;
+  display: none; margin: 10px;
+}
+
+.question{
+  font-size: 24px;
+}
+
+.quiz {
+  font-size: 15px;
 }

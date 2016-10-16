@@ -52,5 +52,5 @@ function printQuizResult(){
 }
 
 function showNext() {
-    $('#nextButton').toggle(true);
+    $('#nextButton').prop('disabled', false);
 }

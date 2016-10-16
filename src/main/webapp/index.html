@@ -51,41 +51,61 @@
 </div>
 <div class="jumbotron vertical-center">
     <div class="container">
-        <div id="container" class="panel panel-default">
+        <div id="container" class="panel panel-default" style="position: relative">
             <!-- Заголовок -->
 
             <!-- Панель номер вопроса - вопрос -->
-            <div class="panel panel-info">
+            <!--<div class="panel panel-info">
                 <div id="question_num" class="panel-body"><p style="font-family:Montserrat, sans-serif; font-size:24px"></p></div>
                 <div id="question_text" class="panel-body"><p style="font-family:Montserrat, sans-serif; font-size:24px"></p></div>
+            </div>-->
+
+            <div style="position:absolute; width: 100%; height: 100%; z-index: 1000; background: rgba(200,200,200,0.2)" id="overlay">
+                <img class="small-loading" src="img/loading.gif"/>
             </div>
 
-            <div id="content" class="panel-body">
-                <!-- Тест -->
-                <div id="quiz_container"></div>
+            <div class="row show-grid" style="height: 60px;">
+                <div class="col-md-6">
+                    <div class="row show-grid" style="height: 60px;">
+                        <div class="col-md-4">
+                            <!-- Начать -->
+                            <button type="button" class="btn btn-success" id="startButton" onclick="get_question()">Start</button>
+                            <!-- След. вопрос -->
+                            <button type="button" class="btn btn-success" id="nextButton" onclick="get_question()"><span class="glyphicon glyphicon-forward"></span> Next</button>
+                            <!-- Отправить результат -->
+                            <button type="button" class="btn btn-success" id="sendButton" onclick="send_result()"><span class="glyphicon glyphicon-ok"></span> Send</button>
+                            <!-- Вертушка -->
+                            <div class="btn btn-success" id="loadingButton" disabled><img class="small-loading" src="img/loading.gif"/></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div id="question_num" class="question"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="question_text" class="question">Let's start your interview!</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="content" class="panel-body">
+                        <!-- Тест -->
+                        <div id="quiz_container"></div>
 
-                <!-- Область камеры -->
-                <div id="voximplant_container"></div>
+                        <!-- Область камеры -->
+                        <div id="voximplant_container"></div>
 
-                <!-- Кнопки -->
-                <div class="btn-group btn-group-justified">
-                    <div class="btn-group">
-                        <!-- Начать -->
-                        <button type="button" class="btn btn-success" id="startButton" onclick="get_question()">Start</button>
-                        <!-- След. вопрос -->
-                        <button type="button" class="btn btn-success" id="nextButton" onclick="get_question()"><span class="glyphicon glyphicon-forward"></span> Next</button>
-                        <!-- Отправить результат -->
-                        <button type="button" class="btn btn-success" id="sendButton" onclick="send_result()"><span class="glyphicon glyphicon-ok"></span> Send</button>
-                        <!-- Ваши ответы успешно отправлены -->
-                        <div class="btn-success" id="sendSuccess">Yours answers are successfully sent!</div>
-                        <!-- Вертушка -->
-                        <div class="btn btn-success" id="loadingButton" disabled><img class="small-loading" src="img/loading.gif"/></div>
-                        <!--  <button type="button" class="btn btn-default" id="fsButton">Enter fullscreen</button>-->
+                        <!-- Кнопки -->
+                        <div class="btn-group btn-group-justified">
+                            <div class="btn-group">
+                                <!-- Ваши ответы успешно отправлены -->
+                                <div class="btn-success" id="sendSuccess">Yours answers are successfully sent!</div>
+                                <!--  <button type="button" class="btn btn-default" id="fsButton">Enter fullscreen</button>-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- Логи-->
-            <div id="log" class="well hidden"></div>
+            <div id="log" class="row well hidden"></div>
         </div>
     </div>
 </div>
