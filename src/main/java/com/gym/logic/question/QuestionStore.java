@@ -48,13 +48,14 @@ public class QuestionStore {
     public static Question getQuestion(String theme, String type, Integer num) throws Exception{
         Question question = null;
         if("quiz".equals(type)){
-            question = getQuizQuestion(theme, num);
-            if(question == null){
-                // Если закончились вопросы по квизу - начинаем отображать вопросы с видео
-                question = getPlainQuestion(theme, 1);
-            }
+            return getQuizQuestion(theme, num);
+//            question = getQuizQuestion(theme, num);
+//            if(question == null){
+//                // Если закончились вопросы по квизу - начинаем отображать вопросы с видео
+//                question = getPlainQuestion(theme, 1);
+//            }
         }
-        else if("plain".equals(type)){
+        if("plain".equals(type)){
             question = getPlainQuestion(theme, num);
         }
         return question;

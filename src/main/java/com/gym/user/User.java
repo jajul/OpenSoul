@@ -1,5 +1,7 @@
 package com.gym.user;
 
+import org.json.JSONObject;
+
 /**
  * Created by Julia on 16.10.2016.
  */
@@ -25,5 +27,13 @@ public class User {
 
     public String getUserEmail() {
         return userEmail;
+    }
+
+    public JSONObject toJSON(){
+        return new JSONObject().put("userName", userName).put("userEmail", userEmail);
+    }
+    @Override
+    public String toString() {
+        return toJSON().toString();
     }
 }

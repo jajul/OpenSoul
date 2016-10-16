@@ -221,13 +221,10 @@ function onCallConnected(e) {
 
 // Call disconnected
 function onCallDisconnected(e) {
-    log("CallDisconnected: " + currentCall.id() + " Call state: " + currentCall.state());
-    currentCall = null;
-    $('#cancelButton').replaceWith('<button type="button" class="btn btn-success" id="callButton">Call</button>');
-    $('#cancelButton').remove();
-    $('#callButton').click(function () {
-        createCall();
-    });
+    if(currentCall != null) {
+        log("CallDisconnected: " + currentCall.id() + " Call state: " + currentCall.state());
+        currentCall = null;
+    }
 }
 
 // Call failed

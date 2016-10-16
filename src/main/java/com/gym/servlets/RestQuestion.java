@@ -53,6 +53,7 @@ public class RestQuestion extends HttpServlet {
             }
             else{
                 JSONObject resp = new JSONObject();
+                resp.put("type", type);
                 resp.put("num", -1);
                 logger.debug("response: " + resp);
                 out.write(resp.toString());
