@@ -57,10 +57,10 @@ public class SendMail {
 
         for (Question question : user.getQuizResult().getQuizResults().keySet()) {
             QuizQuetion q = (QuizQuetion) question;
-            emailBody.append("<br><br>\tQuestion: ").append(q.getText());
-//            emailBody.append(Arrays. q.getOptions());
-            emailBody.append("<br>\tCandidate' answer: ").append(user.getQuizResult().getQuizResults().get(question));
-            emailBody.append("<br>\tRight answer: ").append(q.getAnswer_num());
+            emailBody.append("<br>Question: ").append(q.getText()).append("<ul>");
+            q.getOptions().stream().forEach(x ->  emailBody.append("<li>").append(x.getText()).append("</li>"));
+            emailBody.append("</ul><br>Candidate' answer: ").append(user.getQuizResult().getQuizResults().get(question));
+            emailBody.append("<br>Right answer: ").append(q.getAnswer_num());
         }
 
         emailBody.append("<hr><br>Email for contact with candidate: <a href=\"mailto:" + user.getUserName() + ">" + user.getUserEmail() + "</a>")
